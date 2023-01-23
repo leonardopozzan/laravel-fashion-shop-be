@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Functions\Helpers;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Type;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProductController extends Controller
 {
@@ -28,7 +34,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $types = Type::all();
+        $brands = Brand::all();
+        $categories = Category::all();
+        $products = Product::all();
+        return view('admin.products.create', compact('products', 'types', 'brands', 'categories'));
     }
 
     /**
@@ -39,7 +49,16 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $data = $request->validated();
+        $slug = Helpers::generateSlug($request->name);
+        $data['slug'] = $slug;
+        if($request->hasFile('image')) {
+            $path = Storage::put('images', $request->image);
+            $data['image'] = $path;
+        }
+        $new_product = Product::create($data);
+
+        return redirect()->route('admin.products.show', $new_product->slug);
     }
 
     /**
@@ -50,7 +69,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('admin.products.show', compact('product'));
     }
 
     /**
