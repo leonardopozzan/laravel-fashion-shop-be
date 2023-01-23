@@ -46,7 +46,9 @@ class StoreProductRequest extends FormRequest
             'price.required' => 'Il prezzo è obbligatorio.',
             'price.max' => 'Il prezzo non deve superare :max',
             'price.min' => 'Il prezzo non deve essere minore di :min',
-            // 'type_id.required' => 'il campo e richiesto'
+            'type_id.required' => 'il campo e richiesto',
+            'brand_id.required' => 'il campo e richiesto',
+            'category_id.required' => 'il campo e richiesto',
         ];
     }
 }

@@ -80,7 +80,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $types = Type::all();
+        $brands = Brand::all();
+        $categories = Category::all();
+        return view('admin.products.edit', compact('product', 'types', 'brands', 'categories'));
     }
 
     /**
@@ -92,7 +95,21 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $data = $request->validated();
+        $slug = Helpers::generateSlug($request->name);
+        $data['slug'] = $slug;
+        if($request->hasFile('image')){
+            if ($product->image) {
+                Storage::delete($product->image);
+            }
+
+            $path = Storage::put('images', $request->image);
+            $data['image'] = $path;
+        }
+        $updated = $product->name;
+        $product->update($data);
+
+        return redirect()->route('admin.products.index')->with('message', "$updated updated successfully");
     }
 
     /**
