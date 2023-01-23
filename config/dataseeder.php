@@ -60,7 +60,7 @@ return [
         "zorah",
         "zorah biocosmetiques"
     ],
-    'categories' => [
+    'types' => [
         'Blush',
         'Bronzer',
         'Eyebrow',
@@ -72,7 +72,7 @@ return [
         'Mascara',
         'Nail polish'
     ],
-    'textures' => [
+    'categories' => [
         'powder',
         'cream',
         'pencil',
