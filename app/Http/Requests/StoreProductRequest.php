@@ -26,9 +26,9 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => 'required|unique:products|max:100|min:3',
             'description' => 'nullable',
-            'price' => 'required|integer|max:100|min:3',
+            'price' => 'required|numeric|between:0, 100',
             'image' => 'nullable|image|max:255',
-            'rating' => 'nullable',
+            'rating' => 'nullable|numeric|between:0, 5',
             'available' => 'required',
             'detail_link' => 'nullable',
             'type_id' => 'required|exists:types,id',
@@ -46,9 +46,12 @@ class StoreProductRequest extends FormRequest
             'price.required' => 'Il prezzo è obbligatorio.',
             'price.max' => 'Il prezzo non deve superare :max',
             'price.min' => 'Il prezzo non deve essere minore di :min',
-            'type_id.required' => 'il campo e richiesto',
-            'brand_id.required' => 'il campo e richiesto',
-            'category_id.required' => 'il campo e richiesto',
+            'rating.max' => 'Il rating non deve superare :max',
+            'rating.min' => 'Il rating non deve essere minore di :min',
+            'available.required' => 'La disponibilità è obbligatoria.',
+            'type_id.required' => 'il campo è richiesto',
+            'brand_id.required' => 'il campo è richiesto',
+            'category_id.required' => 'il campo è richiesto',
         ];
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Tag;
 use App\Models\Type;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
@@ -32,13 +33,13 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Product $product)
     {
         $types = Type::all();
         $brands = Brand::all();
         $categories = Category::all();
-        $products = Product::all();
-        return view('admin.products.create', compact('products', 'types', 'brands', 'categories'));
+        $tags = Tag::all();
+        return view('admin.products.create', compact('product', 'types', 'brands', 'categories', 'tags'));
     }
 
     /**
@@ -57,6 +58,9 @@ class ProductController extends Controller
             $data['image'] = $path;
         }
         $new_product = Product::create($data);
+        if ($request->has('tags')) {
+            $new_product->tags()->attach($request->tags);
+        }
 
         return redirect()->route('admin.products.show', $new_product->slug);
     }
@@ -83,7 +87,8 @@ class ProductController extends Controller
         $types = Type::all();
         $brands = Brand::all();
         $categories = Category::all();
-        return view('admin.products.edit', compact('product', 'types', 'brands', 'categories'));
+        $tags = Tag::all();
+        return view('admin.products.edit', compact('product', 'types', 'brands', 'categories', 'tags'));
     }
 
     /**
@@ -108,6 +113,12 @@ class ProductController extends Controller
         }
         $updated = $product->name;
         $product->update($data);
+        
+        if($request->has('tags')){
+            $product->tags()->sync($request->tags);
+        } else {
+            $product->tags()->sync([]);
+        }
 
         return redirect()->route('admin.products.index')->with('message', "$updated updated successfully");
     }
