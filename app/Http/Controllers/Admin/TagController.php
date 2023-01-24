@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Functions\Helpers;
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use App\Http\Requests\StoreTagRequest;
@@ -38,7 +39,11 @@ class TagController extends Controller
      */
     public function store(StoreTagRequest $request)
     {
-        //
+        $data = $request->validated();
+        $slug = Helpers::generateSlug($request->name);
+        $data['slug'] = $slug;
+        Tag::create($data);
+        return redirect()->back()->with('message', "Tag $slug added successfully!");
     }
 
     /**
@@ -72,7 +77,11 @@ class TagController extends Controller
      */
     public function update(UpdateTagRequest $request, Tag $tag)
     {
-        //
+        $data = $request->validated();
+        $slug = Helpers::generateSlug($request->name);
+        $data['slug'] = $slug;
+        $tag->update($data);
+        return redirect()->back()->with('message', "Tag $slug updates successfully!");
     }
 
     /**
@@ -83,6 +92,9 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+        $cancellato = $tag->name;
+
+        return redirect()->route('admin.tags.index')->with('message', "$cancellato delete successfully!");
     }
 }

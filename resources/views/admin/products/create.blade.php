@@ -10,7 +10,7 @@
                     <div class="mb-3">
                         {{-- Nome Prodotto --}}
                         <label for="name" class="form-label">Name <span>*</span></label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required maxlength="100" minlength="3">
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -18,7 +18,7 @@
                     {{-- Prezzo Prodotto --}}
                     <div class="mb-3">
                         <label for="price" class="form-label">Prezzo <span>*</span></label>
-                        <input type="number" step="0.01" name="price" id="price" class="form-control  @error('price') is-invalid @enderror" required>
+                        <input type="number" step="0.01" name="price" id="price" class="form-control  @error('price') is-invalid @enderror" required max="100" min="0">
                         @error('price')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -37,7 +37,7 @@
                     {{-- Rating Prodotto --}}
                     <div class="mb-3">
                         <label for="rating" class="form-label">Rating</label>
-                        <input type="number" step="0.1" class="form-control @error('rating') is-invalid @enderror" id="rating" name="rating">
+                        <input type="number" step="0.1" class="form-control @error('rating') is-invalid @enderror" id="rating" name="rating" max="5" min="0">
                         @error('rating')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
