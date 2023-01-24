@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 @section('content')
 
-    <h1>Create Products</h1>
-    <section class="container my-5">
+    <section class="container my-5" id="create">
+    <h1 class="mb-4">Create Products</h1>
         <div class="row bg-white">
             <div class="col-12">
-                <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" class="">
+                <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" class="form-crud">
                     @csrf
                     <div class="mb-3">
                         {{-- Nome Prodotto --}}
@@ -15,32 +15,11 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    {{-- Immagine Prodotto --}}
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Immagine</label>
-                        <input type="file" name="image" id="image" class="form-control  @error('image') is-invalid @enderror">
-                        @error('image')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    {{-- Descrizione Prodotto --}}
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Descrizione</label>
-                        <textarea class="form-control" id="description" name="description"></textarea>
-                    </div>
                     {{-- Prezzo Prodotto --}}
                     <div class="mb-3">
-                        <label for="price">Prezzo</label>
+                        <label for="price" class="form-label">Prezzo</label>
                         <input type="number" step="0.01" name="price" id="price" class="form-control  @error('price') is-invalid @enderror" required>
                         @error('price')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    {{-- Rating Prodotto --}}
-                    <div class="mb-3">
-                        <label for="rating" class="form-label">Rating</label>
-                        <input type="number" step="0.1" class="form-control @error('rating') is-invalid @enderror" id="rating" name="rating">
-                        @error('rating')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -55,6 +34,14 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    {{-- Rating Prodotto --}}
+                    <div class="mb-3">
+                        <label for="rating" class="form-label">Rating</label>
+                        <input type="number" step="0.1" class="form-control @error('rating') is-invalid @enderror" id="rating" name="rating">
+                        @error('rating')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>      
                     {{-- Tipo Prodotto (es. Eyeliner, Blush...) --}}
                     <div class="mb-3">
                         <label for="type_id" class="form-label text-capitalize">Seleziona tipo</label>
@@ -97,20 +84,38 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="mb-3">
-                    <label for="tags">Tags</label> <br>
+                    {{-- Tag Prodotto --}}
+                    <div class="mb-3 row">
+                    <label for="tags" class="form-label">Tags</label> <br>
                         @foreach ($tags as $tag)
                             @if (old("tags"))
-                                <input type="checkbox" name="tags[]" value="{{ $tag->id }}" {{in_array( $tag->id, old("tags", []) ) ? 'checked' : ''}}>
+                            <div class="d-flex">
+                                <input class="me-2 col-xl-2 col-lg-3 col-md-4 col-6" type="checkbox" name="tags[]" value="{{ $tag->id }}" {{in_array( $tag->id, old("tags", []) ) ? 'checked' : ''}}>
                                 <span class="text-capitalize">{{ $tag->name }}</span>
+                            </div>
                             @else
-                                <input type="checkbox" name="tags[]" value="{{ $tag->id }} " {{ old('tags', $product->tags) ? (old('tags', $product->tags)->contains($tag->id) ? 'checked' : '') : '' }}>
-                                <span class="text-capitalize">{{ $tag->name }}</span>
+                                <div class="d-flex col-xl-2 col-lg-3 col-md-4 col-6">
+                                    <input class="me-2" type="checkbox" name="tags[]" value="{{ $tag->id }} " {{ old('tags') ? (old('tags')->contains($tag->id) ? 'checked' : '') : '' }}>
+                                    <span class="text-capitalize">{{ $tag->name }}</span>
+                                </div>
                             @endif
                         @endforeach
                     </div>
-                    <button type="submit" class="btn btn-success" onclick="console.log('submit')">Submit</button>
-                    <button type="reset" class="btn btn-primary">Reset</button>
+                    {{-- Descrizione Prodotto --}}
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Descrizione</label>
+                        <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                    {{-- Immagine Prodotto --}}
+                    <div class="mb-4">
+                        <label for="image" class="form-label">Immagine</label>
+                        <input type="file" name="image" id="create_cover_image" class="form-control  @error('image') is-invalid @enderror">
+                        @error('image')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-danger">Reset</button>
                 </form>
             </div>
         </div>
