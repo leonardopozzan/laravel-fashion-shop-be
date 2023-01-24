@@ -46,10 +46,10 @@
                         @endif
                         <td><a class="link-secondary" href="{{route('admin.products.edit', $product->slug)}}" title="Edit product"><i class="fa-solid fa-pen"></i></a></td>
                         <td>
-                            <form action="{{route('admin.products.destroy', $product->slug)}}" method="post">
+                            <form action="{{route('admin.products.destroy', $product->slug)}}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="delete-button btn btn-danger ms-3" data-item-title="{{$product->title}}"><i class="fa-solid fa-trash-can"></i></button>
+                            <button type="submit" class="delete-button btn btn-danger ms-3" data-item-title="{{$product->name}}"><i class="fa-solid fa-trash-can"></i></button>
                             </form>
                         </td>
                     </tr>
@@ -57,6 +57,7 @@
             </tbody>
         </table>
         {{ $products->links('vendor.pagination.bootstrap-5') }}
+        @include('partials.admin.modal')
     </div>
 </div>
 @endsection
