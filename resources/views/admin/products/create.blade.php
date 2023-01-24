@@ -9,7 +9,7 @@
                     @csrf
                     <div class="mb-3">
                         {{-- Nome Prodotto --}}
-                        <label for="name" class="form-label">Name</label>
+                        <label for="name" class="form-label">Name <span>*</span></label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required>
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -17,7 +17,7 @@
                     </div>
                     {{-- Prezzo Prodotto --}}
                     <div class="mb-3">
-                        <label for="price" class="form-label">Prezzo</label>
+                        <label for="price" class="form-label">Prezzo <span>*</span></label>
                         <input type="number" step="0.01" name="price" id="price" class="form-control  @error('price') is-invalid @enderror" required>
                         @error('price')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -25,7 +25,7 @@
                     </div>
                     {{-- Disponibilità Prodotto --}}
                     <div class="mb-3">
-                        <label for="available" class="form-label">Disponibilità</label>
+                        <label for="available" class="form-label">Disponibilità <span>*</span></label>
                         <input type="radio" name="available" value="1" checked>
                         <span class="text-capitalize">si</span>
                         <input type="radio" name="available" value="0" >
@@ -44,7 +44,7 @@
                     </div>      
                     {{-- Tipo Prodotto (es. Eyeliner, Blush...) --}}
                     <div class="mb-3">
-                        <label for="type_id" class="form-label text-capitalize">Seleziona tipo</label>
+                        <label for="type_id" class="form-label text-capitalize">Seleziona tipo <span>*</span></label>
                         <select name="type_id" id="type_id" class="form-control @error('type_id') is-invalid @enderror text-capitalize" required>
                             <option value="">Seleziona tipo</option>
                             @foreach ($types as $type)
@@ -58,7 +58,7 @@
                     </div>
                     {{-- Categoria Prodotto (es. Powder, Liquid....) --}}
                     <div class="mb-3">
-                        <label for="brand_id" class="form-label text-capitalize">Seleziona categoria</label>
+                        <label for="brand_id" class="form-label text-capitalize">Seleziona categoria <span>*</span></label>
                         <select name="category_id" id="category_id" class="form-control @error('category_id') is-invalid @enderror text-capitalize" required>
                             <option value="">Seleziona categoria</option>
                             @foreach ($categories as $category)
@@ -72,7 +72,7 @@
                     </div>
                     {{-- Brand Prodotto --}}
                     <div class="mb-3">
-                        <label for="brand_id" class="form-label text-capitalize">Seleziona Brand</label>
+                        <label for="brand_id" class="form-label text-capitalize">Seleziona Brand <span>*</span></label>
                         <select name="brand_id" id="brand_id" class="form-control @error('brand_id') is-invalid @enderror text-capitalize" required>
                             <option value="">Seleziona Brand</option>
                             @foreach ($brands as $brand)

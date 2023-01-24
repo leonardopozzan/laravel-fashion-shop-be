@@ -52,5 +52,9 @@ table {
 .form-crud {
     label {
         font-weight: bold;
+        
+        span {
+            color: $red;
+        }
     }
 }
