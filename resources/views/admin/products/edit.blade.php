@@ -102,7 +102,7 @@
                         @if($product->image)
                             <img class="shadow" width="150" src="{{asset('storage/' . $product->image)}}" alt="{{$product->image}}">
                             @else
-                            <img class="shadow" width="150" src="https://dummyimage.com/200x200/000/fff" alt="C/O https://placeholder.com/">
+                            <img class="shadow" width="150" src="https://dummyimage.com/200x200/000/fff" alt="C/O https://dummyimage.com/">
                         @endif
                         </div>
                         <div class="mb-3">
