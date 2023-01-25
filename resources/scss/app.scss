@@ -2,6 +2,7 @@
 @import '~bootstrap/scss/bootstrap';
 @import './sidebar.scss';
 @import './products/index';
+@import './products/show';
 *{
     padding: 0;
     margin: 0;
@@ -48,3 +49,17 @@ table {
         color: $light-blue;
     }
 }
+
+.form-crud {
+    label {
+        font-weight: bold;
+        
+        span {
+            color: $red;
+        }
+    }
+}
+
+// .bordo {
+//     border: 1px solid red;
+// }

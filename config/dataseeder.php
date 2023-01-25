@@ -474,7 +474,7 @@ return [
             "website_link" => "https://purpicks.com/",
             "description" => "\u003cstrong\u003eProduct Description\u003c/strong\u003eAnti-aging formula made with organic Pure Argan oil and Pure Light Capture\u003csup\u003e®\u003c/sup\u003e pigments. 24 Hour crease-free intensity (no build-up increase of eyelid), no running. Pure Light Capture® pigments deliver color and luminosity. Silky and refreshingly light feel, Pure Argan eyeshadow is weightless on the eyelids. Pure Argan eyeshadow \u003cstrong\u003esoothes\u003c/strong\u003e, \u003cstrong\u003ehides redness \u003c/strong\u003eand \u003cstrong\u003eslows the appearance of the signs of aging on the skin.\u003c/strong\u003e\u003cp align='LEFT'\u003eNatural cosmetic certified by Ecocert Greenlife according to Ecocert Standard available at=> http=>//cosmetiques.ecocert.com\u003c/p\u003e100% of the total ingredients are from natural origin5% of total ingredients are from organic farming",
             "rating" => null,
-            "category_id" => null,
+            "category_id" => 1,
             "type_id" => 5,
             "api_featured_image" => "//s3.amazonaws.com/donovanbailey/products/api_featured_images/000/001/040/original/open-uri20180630-4-1afkyee?1530390386"
         ],
@@ -506,7 +506,7 @@ return [
             "website_link" => "https://purpicks.com/",
             "description" => "Let your eyes naturally pop with our B Smudged, a subtle eye color that adds a tint of color to the base of your lashes. An organic, cream eye color, B Smudged eliminates the inevitable uneven line from traditional eyeliners, and does not require expert blending techniques of messy, powder-based shadows. Simply 'smudge' along lash line for color that stays in place for a long lasting look.",
             "rating" => null,
-            "category_id" => null,
+            "category_id" => 2,
             "type_id" => 5,
             "api_featured_image" => "//s3.amazonaws.com/donovanbailey/products/api_featured_images/000/001/038/original/open-uri20180630-4-xhqdne?1530390385"
         ],
@@ -538,7 +538,7 @@ return [
             "website_link" => "https://purpicks.com/",
             "description" => "Our Multi Purpose Pressed Powders may be used for blush or eye shadow. Blended with antioxidants from Certified Organic Fruits, Berries \u0026amp; Botanicals*. Made without any gluten containing ingredients. Mica free Pink Parfait and Papaya will offer a natural, ultra sheer semi-matte finish. The petals from beautiful crushed red roses that are found in Pink Parfait, are valued for their natural color and delightful aroma that they provide! Acai Berry will offer a natural, ultra sheer satin finish (mica added). VEGAN. Image one is Pink Parfait. Image two is Papaya, and image three is Acai Berry. Model in image four is wearing Papaya. Model in image five is wearing Acai Berry. To see a demonstration of Papaya, click on the video and fast forward to 3=>44. Enjoy! This product is EWG VERIFIED\u0026#x2122; and rated 'CLEAN'in the Think Dirty app! BPA and Phthalate free packaging. Plastic parts of compacts are recyclable. *Tiny flecks of fruit and botanical particles may be visible in powder. Pink Parfait and Papaya are Titanium Dioxide and Mica free. Net Weight=> 2.8 gm.",
             "rating" => null,
-            "category_id" => null,
+            "category_id" => 1,
             "type_id" => 5,
             "api_featured_image" => "//s3.amazonaws.com/donovanbailey/products/api_featured_images/000/001/036/original/open-uri20180630-4-ign3hh?1530390384"
         ],
