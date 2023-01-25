@@ -5,7 +5,7 @@
 <div id="products-list">
     <div class="table-container">
         @if(session()->has('message'))
-        <div class="alert alert-success mb-3 mt-3 w-75 m-auto">
+        <div class="alert alert-success mb-3 mt-3 w-75 m-auto text-capitalize">
             {{ session()->get('message') }}
         </div>
         @endif

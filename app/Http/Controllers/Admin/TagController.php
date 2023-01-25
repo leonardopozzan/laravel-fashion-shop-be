@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Functions\Helpers;
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
-use App\Http\Requests\StoreTagRequest;
-use App\Http\Requests\UpdateTagRequest;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 class TagController extends Controller
 {
@@ -37,13 +38,18 @@ class TagController extends Controller
      * @param  \App\Http\Requests\StoreTagRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTagRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $validator = $this->validationStore($request->all());
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator, 'store_errors');
+        }
+        $data = $validator->validated();
         $slug = Helpers::generateSlug($request->name);
         $data['slug'] = $slug;
         Tag::create($data);
-        return redirect()->back()->with('message', "Tag $slug added successfully!");
+        $added = $request->name;
+        return redirect()->back()->with('message', "Tag $added added successfully!");
     }
 
     /**
@@ -75,13 +81,18 @@ class TagController extends Controller
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTagRequest $request, Tag $tag)
+    public function update(Request $request, Tag $tag)
     {
-        $data = $request->validated();
+        $validator = $this->validationUpdate($request->all(), $tag);
+        if ($validator->fails()) {
+            return redirect()->back()->with('tag_id',$tag->id)->withErrors($validator, "update_errors");
+        };
+        $data = $validator->validated();
         $slug = Helpers::generateSlug($request->name);
         $data['slug'] = $slug;
         $tag->update($data);
-        return redirect()->back()->with('message', "Tag $slug updates successfully!");
+        $updated = $tag->name;
+        return redirect()->back()->with('message', "Tag $updated updates successfully!");
     }
 
     /**
@@ -93,8 +104,34 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
         $tag->delete();
-        $cancellato = $tag->name;
+        $cancelled = $tag->name;
 
-        return redirect()->route('admin.tags.index')->with('message', "$cancellato delete successfully!");
+        return redirect()->route('admin.tags.index')->with('message', "$cancelled delete successfully!");
+    }
+    private function validationStore($data){
+        $validator = Validator::make($data, [
+            'name' => 'required|unique:tags|max:45|min:3',
+        ],
+        [
+            'name.required' => 'Il nome è obbligatorio.',
+            'name.min' => 'Il nome deve essere lungo almeno :min caratteri.',
+            'name.max' => 'Il nome non può superare i :max caratteri.',
+        ]
+        );
+        return $validator;
+    }
+
+    private function validationUpdate($data, $tag){
+        $validator = Validator::make($data, [
+            'name' => ['required', Rule::unique('tags')->ignore($tag), 'max:45', 'min:3'],
+        ],
+        [
+            'name.required' => 'Il nome è obbligatorio.',
+            'name.min' => 'Il nome deve essere lungo almeno :min caratteri.',
+            'name.max' => 'Il nome non può superare i :max caratteri.',
+        ]
+        );
+        return $validator;
     }
 }
+

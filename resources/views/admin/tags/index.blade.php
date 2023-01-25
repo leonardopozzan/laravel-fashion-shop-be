@@ -3,7 +3,7 @@
 @section('content')
     <section class="container mt-5">
         @if (session()->has('message'))
-            <div class="alert alert-success mb-3 mt-3 w-75 m-auto">
+            <div class="alert alert-success mb-3 mt-3 w-75 m-auto text-capitalize">
                 {{ session()->get('message') }}
             </div>
         @endif
@@ -12,10 +12,10 @@
             <h1 class="fs-2 mb-3">Aggiungi un Tag</h1>
             <div class="w-50">
                 <label for="name">Nome</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" required maxlength="45" minlength="3">
-                @error('name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <input type="text" class="form-control @if(count($errors->store_errors)) is-invalid @endif" name="name" id="name" required maxlength="45">
+                    @if(count($errors->store_errors))
+                        <div class="invalid-feedback">{{$errors->store_errors->first('name')}}</div>
+                    @endif
             </div>
             <div class="mt-4">
                 <button type="submit" class="btn btn-primary" id="btn-submit">Invia</button>
@@ -39,7 +39,12 @@
                             <form class="m-0" action="{{ route('admin.tags.update', $tag->slug) }}" method="post">
                                 @csrf
                                 @method('PATCH')
-                                <input class="border-0 bg-transparent text-capitalize" type="text" name="name" value="{{ $tag->name }}" required maxlength="45" minlength="3">
+                                <input class="border-0 bg-transparent @if(count($errors->update_errors)) is-invalid @endif" type="text" name="name" value="{{$tag->name}}">
+                                    @if(count($errors->update_errors))
+                                        @if(session()->get('tag_id') == $tag->id)
+                                            <div class="invalid-feedback">{{$errors->update_errors->first('name')}}</div>
+                                        @endif
+                                    @endif
                             </form>
                         </td>
                         <td class="pt-4">
