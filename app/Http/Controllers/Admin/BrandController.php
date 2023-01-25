@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Functions\Helpers;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Http\Requests\StoreBrandRequest;
-use App\Http\Requests\UpdateBrandRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class BrandController extends Controller
 {
@@ -37,15 +38,17 @@ class BrandController extends Controller
      * @param  \App\Http\Requests\StoreBrandRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBrandRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
-        $data['name'] = $request->new_name;
+        $validator = $this->storeValidation($request->all());
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator, 'store_errors');
+        }
+        $data = $validator->validated();
         $slug = Helpers::generateSlug($request->new_name);
-        unset($data['new_name']);
         $data['slug'] = $slug;
         Brand::create($data);
-        return redirect()->back()->with('message', "Language $slug added successfully");
+        return redirect()->back()->with('message', "Language {$slug} added successfully");
     }
 
     /**
@@ -77,20 +80,19 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBrandRequest $request, Brand $brand)
+    public function update(Request $request, Brand $brand)
     {
         // dd($request->isMethod('patch'));
 
-        try {
-            $data = $request->validated();
+        $validator = $this->updateValidation($request->all(),$brand);
+        if ($validator->fails()) {
+            return redirect()->back()->with('brand_id',$brand->id)->withErrors($validator, "update_errors");
         }
-        catch(\Exception $e){
-            dd($request);
-        }
+        $data = $validator->validated();
         $slug = Helpers::generateSlug($request->name);
         $data['slug'] = $slug;
         $brand->update($data);
-        return redirect()->back()->with('message', "Language $slug updates successfully");
+        return redirect()->back()->with('message', "Language {$slug} updates successfully");
     }
 
     /**
@@ -103,6 +105,31 @@ class BrandController extends Controller
     {
         $brand->delete();
 
-        return redirect()->back()->with('message', "language $language->name removed successfully");
+        return redirect()->back()->with('message', "language {$language->name} removed successfully");
+    }
+
+    private function storeValidation($request){
+        $rules = [
+            'name' => 'required|unique:brands|max:45'
+        ];
+        $messages = [
+            'name.required' => 'il nome è obbligatorio',
+            'name.unique' => 'il nome esiste già',
+            'name.max' => 'il nome non può superare i :max caratteri',
+        ];
+        $validator = Validator::make($request, $rules , $messages);
+        return $validator;
+    }
+    private function updateValidation($request, $brand){
+        $rules = [
+            'name' => ['required',Rule::unique('brands')->ignore($brand),'max:45']
+        ];
+        $messages = [
+            'name.required' => 'il nome è obbligatorio',
+            'name.unique' => 'il nome esiste già',
+            'name.max' => 'il nome non può superare i :max caratteri',
+        ];
+        $validator = Validator::make($request, $rules , $messages);
+        return $validator;
     }
 }

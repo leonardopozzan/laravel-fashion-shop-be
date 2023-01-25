@@ -30,11 +30,11 @@ class UpdateBrandRequest extends FormRequest
     }
     public function messages()
     {
-        // dd($this->brand->id);
+        // dd($this->brand);
         return [
-            'name.required' => 'il nome è obbligatorio',
-            'name.unique' => "{$this->brand->id} il nome esiste già",
-            'name.max' => 'il nome non può superare i :max caratteri',
+            'name.required' => "il nome è obbligatorio",
+            'name.unique' => "il nome esiste già",
+            'name.max' => "il nome non può superare i :max caratteri",
         ];
     }
 }
