@@ -29,7 +29,7 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
 
     Route::resource('products', ProductController::class)->parameters(['products' => 'product:slug']);
     Route::resource('types', TypeController::class)->parameters(['types' => 'type:slug'])->except('show','create','edit');
-    Route::resource('categories', CategoryController::class)->parameters(['categoryies' => 'category:slug'])->except('show','create','edit');
+    Route::resource('categories', CategoryController::class)->parameters(['categories' => 'category:slug'])->except('show','create','edit');
     Route::resource('tags', TagController::class)->parameters(['tags' => 'tag:slug'])->except('show','create','edit');
     Route::resource('brands', BrandController::class)->parameters(['brands' => 'brand:slug'])->except('show','create','edit');
 });
