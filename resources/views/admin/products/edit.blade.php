@@ -84,13 +84,13 @@
                     <label for="tags" class="form-label">Tags</label> <br>
                         @foreach ($tags as $tag)
                             @if (old("tags"))
-                                <div class="me-2 d-flex col-xl-2 col-lg-3 col-md-4 col-6">
-                                    <input type="checkbox" name="tags[]" value="{{ $tag->id }}" {{in_array( $tag->id, old("tags", []) ) ? 'checked' : ''}}>
+                                <div class="d-flex col-xxl-2 col-lg-3 col-md-4 col-6">
+                                    <input class="me-2" type="checkbox" name="tags[]" value="{{ $tag->id }}" {{in_array( $tag->id, old("tags", []) ) ? 'checked' : ''}}>
                                     <span class="text-capitalize">{{ $tag->name }}</span>
                                 </div>
                             @else
-                                <div class="me-2 d-flex col-xl-2 col-lg-3 col-md-4 col-6">
-                                    <input type="checkbox" name="tags[]" value="{{ $tag->id }} " {{ old('tags', $product->tags) ? (old('tags', $product->tags)->contains($tag->id) ? 'checked' : '') : '' }}>
+                                <div class="d-flex col-xxl-2 col-lg-3 col-md-4 col-6">
+                                    <input class="me-2" type="checkbox" name="tags[]" value="{{ $tag->id }} " {{ old('tags', $product->tags) ? (old('tags', $product->tags)->contains($tag->id) ? 'checked' : '') : '' }}>
                                     <span class="text-capitalize">{{ $tag->name }}</span>
                                 </div>
                             @endif

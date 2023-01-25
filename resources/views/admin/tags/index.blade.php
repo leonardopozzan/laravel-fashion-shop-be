@@ -20,7 +20,7 @@
                 </div>
                 <div class="mt-4">
                     <button type="submit" class="btn btn-primary" id="btn-submit">Invia</button>
-                    <button type="reset" class="btn btn-danger text-white" id="btn-reset">Resetta</button>
+                    <button type="reset" class="btn btn-danger text-white" id="btn-reset">Reset</button>
                 </div>
             </form>
             <table class="mb-2">
