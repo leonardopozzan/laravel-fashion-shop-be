@@ -54,11 +54,17 @@ img{
                 font-weight: bold;
                 color: $light-blue;
             }
+            button{
+                color: $white;
+            }
         }
     }
 }
 
 .form-crud {
+    button{
+        color: $white;
+    }
     label {
         font-weight: bold;
         
