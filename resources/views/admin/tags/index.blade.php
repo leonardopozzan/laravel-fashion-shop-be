@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 
 @section('content')
-    <section class="container my-5">
+    <section class="container mt-5">
         @if (session()->has('message'))
             <div class="alert alert-success mb-3 mt-3 w-75 m-auto">
                 {{ session()->get('message') }}
             </div>
         @endif
-        <form action="{{ route('admin.tags.store') }}" method="POST" class="d-flex align-items-center mb-5">
+        <form action="{{ route('admin.tags.store') }}" method="POST" class="mb-5 pb-3">
             @csrf
-            <h1 class="text-center fs-2 m-0">Aggiungi un Tag</h1>
-            <div class="mx-5 px-5">
+            <h1 class="fs-2 mb-3">Aggiungi un Tag</h1>
+            <div class="w-50">
                 <label for="name">Nome</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" required maxlength="45" minlength="3">
                 @error('name')

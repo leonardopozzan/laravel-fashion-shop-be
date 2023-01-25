@@ -29,21 +29,9 @@
                         <th scope="row">{{$product->id}}</th>
                         <td><a href="{{route('admin.products.show', $product->slug)}}" title="View product">{{$product->name}}</a></td>
                         <td>{{$product->price}}&nbsp;&euro;</td>
-                        @if ($product->type)
                             <td>{{$product->type->name}}</td>
-                        @else
-                            <td>/</td>
-                        @endif
-                        @if ($product->brand)
                             <td>{{$product->brand->name}}</td>
-                        @else
-                            <td>/</td>
-                        @endif
-                        @if ($product->category)
                             <td>{{$product->category->name}}</td>
-                        @else
-                            <td>/</td>
-                        @endif
                         <td><a class="link-secondary" href="{{route('admin.products.edit', $product->slug)}}" title="Edit product"><i class="fa-solid fa-pen"></i></a></td>
                         <td>
                             <form action="{{route('admin.products.destroy', $product->slug)}}" method="POST">
