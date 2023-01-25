@@ -13,12 +13,12 @@
         <table class="mb-2">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th class="bl-hidden" scope="col">#</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Brand</th>
-                    <th scope="col">Category</th>
+                    <th class="bl-hidden" scope="col">Price</th>
+                    <th class="bl-hidden" scope="col">Type</th>
+                    <th class="bl-hidden" scope="col">Brand</th>
+                    <th class="bl-hidden" scope="col">Category</th>
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
                 </tr>
@@ -26,12 +26,12 @@
             <tbody>
                 @foreach ($products as $product)
                     <tr>
-                        <th scope="row">{{$product->id}}</th>
+                        <th class="bl-hidden" scope="row">{{$product->id}}</th>
                         <td><a href="{{route('admin.products.show', $product->slug)}}" title="View product">{{$product->name}}</a></td>
-                        <td>{{$product->price}}&nbsp;&euro;</td>
-                            <td>{{$product->type->name}}</td>
-                            <td>{{$product->brand->name}}</td>
-                            <td>{{$product->category->name}}</td>
+                        <td class="bl-hidden">{{$product->price}}&nbsp;&euro;</td>
+                        <td class="bl-hidden">{{$product->type->name}}</td>
+                        <td class="bl-hidden">{{$product->brand->name}}</td>
+                        <td class="bl-hidden">{{$product->category->name}}</td>
                         <td><a class="link-secondary" href="{{route('admin.products.edit', $product->slug)}}" title="Edit product"><i class="fa-solid fa-pen"></i></a></td>
                         <td>
                             <form action="{{route('admin.products.destroy', $product->slug)}}" method="POST">

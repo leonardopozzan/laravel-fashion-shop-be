@@ -1,0 +1,33 @@
+#show {
+    .img-box {
+        width: 25%;
+        height: 25%;
+        margin-bottom: 25px;
+    }
+}
+
+@media screen and (min-width:992px) {
+    #show {
+        .img-box {
+            width: 27%;
+        }
+    }
+}
+
+@media screen and (max-width:992px) and (min-width: 500px) {
+    #show {
+        .img-box {
+            width: 50%;
+            height: auto;
+        }
+    }
+}
+
+@media screen and (max-width:500px) {
+    #show {
+        .img-box {
+            width: 80%;
+            height: auto;
+        }
+    }
+}
