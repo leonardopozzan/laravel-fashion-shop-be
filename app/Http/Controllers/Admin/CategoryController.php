@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use App\Functions\Helpers;
 
 class CategoryController extends Controller
 {
@@ -36,9 +38,17 @@ class CategoryController extends Controller
      * @param  \App\Http\Requests\StoreCategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validator = $this->storeValidation($request->all());
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator, 'store_errors');
+        }
+        $data = $validator->validated();
+        $slug = Helpers::generateSlug($request->name);
+        $data['slug'] = $slug;
+        Category::create($data);
+        return redirect()->back()->with('message', "Category {$request->name} added successfully");
     }
 
     /**
@@ -70,9 +80,17 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(Request $request, Category $category)
     {
-        //
+        $validator = $this->updateValidation($request->all(),$category);
+        if ($validator->fails()) {
+            return redirect()->back()->with('category_id',$category->id)->withErrors($validator, "update_errors");
+        }
+        $data = $validator->validated();
+        $slug = Helpers::generateSlug($request->name);
+        $data['slug'] = $slug;
+        $category->update($data);
+        return redirect()->back()->with('message', "Category {$category->name} updates successfully");
     }
 
     /**
@@ -83,6 +101,33 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return redirect()->back()->with('message', "Category {$category->name} removed successfully");
+    }
+
+    private function storeValidation($request){
+        $rules = [
+            'name' => 'required|unique:categories|max:45'
+        ];
+        $messages = [
+            'name.required' => 'il nome è obbligatorio',
+            'name.unique' => 'il nome esiste già',
+            'name.max' => 'il nome non può superare i :max caratteri',
+        ];
+        $validator = Validator::make($request, $rules , $messages);
+        return $validator;
+    }
+    private function updateValidation($request, $category){
+        $rules = [
+            'name' => ['required',Rule::unique('categories')->ignore($category),'max:45']
+        ];
+        $messages = [
+            'name.required' => 'il nome è obbligatorio',
+            'name.unique' => 'il nome esiste già',
+            'name.max' => 'il nome non può superare i :max caratteri',
+        ];
+        $validator = Validator::make($request, $rules , $messages);
+        return $validator;
     }
 }

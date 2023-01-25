@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Functions\Helpers;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Functions\Helpers;
 
 class BrandController extends Controller
 {
@@ -45,10 +45,10 @@ class BrandController extends Controller
             return redirect()->back()->withErrors($validator, 'store_errors');
         }
         $data = $validator->validated();
-        $slug = Helpers::generateSlug($request->new_name);
+        $slug = Helpers::generateSlug($request->name);
         $data['slug'] = $slug;
         Brand::create($data);
-        return redirect()->back()->with('message', "Language {$slug} added successfully");
+        return redirect()->back()->with('message', "Brand {$request->name} added successfully");
     }
 
     /**
@@ -92,7 +92,7 @@ class BrandController extends Controller
         $slug = Helpers::generateSlug($request->name);
         $data['slug'] = $slug;
         $brand->update($data);
-        return redirect()->back()->with('message', "Language {$slug} updates successfully");
+        return redirect()->back()->with('message', "Brand {$request->name} updates successfully");
     }
 
     /**
@@ -105,7 +105,7 @@ class BrandController extends Controller
     {
         $brand->delete();
 
-        return redirect()->back()->with('message', "language {$language->name} removed successfully");
+        return redirect()->back()->with('message', "Brand {$brand->name} removed successfully");
     }
 
     private function storeValidation($request){
