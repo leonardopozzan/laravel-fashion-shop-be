@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+
 @section('content')
 
     <div id="table-list">
@@ -24,7 +25,6 @@
                     <button type="reset" class="btn btn-danger" id="btn-reset">Resetta</button>
                 </div>
             </form>
-            
             <table class="mb-2">
                 <thead>
                     <tr>
@@ -43,7 +43,10 @@
                                 <form action="{{route('admin.brands.update', $brand->slug)}}" method="post">
                                     @csrf
                                     @method('PATCH')
-                                    <input class="border-0 bg-transparent" type="text" name="name" value="{{$brand->name}}">
+                                    <input class="border-0 bg-transparent @error('name') is-invalid @enderror" type="text" name="name" value="{{$brand->name}}">
+                                    @error('name')
+                                        <div class="invalid-feedback">{{$message}}</div>
+                                    @enderror
                                 </form>
                             </td>
                             {{-- <td><a class="link-secondary" href="{{route('admin.brands.index', $brand->slug)}}" title="Edit brand"><i class="fa-solid fa-pen"></i></a></td> --}}

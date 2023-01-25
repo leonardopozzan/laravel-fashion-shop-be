@@ -24,7 +24,15 @@ class StoreBrandRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|unique:brands|max:45'
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'name.required' => 'il nome è obbligatorio',
+            'name.unique' => 'il nome esiste già',
+            'name.max' => 'il nome non può superare i :max caratteri',
         ];
     }
 }

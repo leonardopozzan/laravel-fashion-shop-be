@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Functions\Helpers;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Http\Requests\StoreBrandRequest;
@@ -38,7 +39,13 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['name'] = $request->new_name;
+        $slug = Helpers::generateSlug($request->new_name);
+        unset($data['new_name']);
+        $data['slug'] = $slug;
+        Brand::create($data);
+        return redirect()->back()->with('message', "Language $slug added successfully");
     }
 
     /**
@@ -72,7 +79,18 @@ class BrandController extends Controller
      */
     public function update(UpdateBrandRequest $request, Brand $brand)
     {
-        //
+        // dd($request->isMethod('patch'));
+
+        try {
+            $data = $request->validated();
+        }
+        catch(\Exception $e){
+            dd($request);
+        }
+        $slug = Helpers::generateSlug($request->name);
+        $data['slug'] = $slug;
+        $brand->update($data);
+        return redirect()->back()->with('message', "Language $slug updates successfully");
     }
 
     /**
@@ -83,6 +101,8 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        //
+        $brand->delete();
+
+        return redirect()->back()->with('message', "language $language->name removed successfully");
     }
 }
