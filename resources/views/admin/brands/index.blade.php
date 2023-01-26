@@ -43,7 +43,7 @@
                                 <form action="{{route('admin.brands.update', $brand->slug)}}" method="post">
                                     @csrf
                                     @method('PATCH')
-                                    <input class="border-0 bg-transparent @if(count($errors->update_errors)) is-invalid @endif" type="text" name="name" value="{{$brand->name}}">
+                                    <input class="border-0 bg-transparent text-capitalize @if(count($errors->update_errors)) is-invalid @endif" type="text" name="name" value="{{$brand->name}}">
                                     @if(count($errors->update_errors))
                                         @if(session()->get('brand_id') == $brand->id)
                                             <div class="invalid-feedback">{{$errors->update_errors->first('name')}}</div>
