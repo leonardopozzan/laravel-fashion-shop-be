@@ -25,4 +25,8 @@ class Product extends Model
     public function tags():BelongsToMany{
         return $this->belongsToMany(Tag::class);
     }
+
+    public function orders() :BelongsToMany{
+        return $this->belongsToMany(Order::class);
+    }
 }

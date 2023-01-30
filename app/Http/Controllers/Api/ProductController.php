@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Tag;
 use App\Models\Type;
@@ -68,6 +69,32 @@ class ProductController extends Controller
             'categories' => $categories,
             'brands' => $brands,
             'tags' => $tags,
+        ]);
+    }
+
+    public function purchase(Request $request){
+        $new_order = new Order();
+        $new_order->email = $request->email;
+        $new_order->address = $request->address;
+        $last_order = Order::latest()->first();
+        if($last_order){
+            $new_code = intval(substr($last_order->code, 1));
+            $new_code++;
+            $new_order->code = '#' . $new_code;
+        }else{
+            $new_order->code = '#1';
+        }
+        $new_order->save();
+
+        $list_item = [];
+        foreach($request->items as $item){
+            $key = $item['id'];
+            $quantity = $item['quantity'];
+            $list_item[$key] = ['quantity' => $quantity];
+        }
+        $new_order->products()->attach($list_item);
+        return response()->json([
+            'success' => true,
         ]);
     }
 }

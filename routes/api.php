@@ -25,4 +25,6 @@ Route::get('products', [ProductController::class, 'index']);
 Route::get('products/{slug}', [ProductController::class, 'show']);
 Route::get('properties', [ProductController::class, 'properties']);
 Route::post('/contacts', [LeadController::class, 'store']);
+Route::post('/purchase', [ProductController::class, 'purchase']);
+
 
