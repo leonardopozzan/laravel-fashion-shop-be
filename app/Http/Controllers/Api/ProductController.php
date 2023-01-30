@@ -41,7 +41,7 @@ class ProductController extends Controller
     }
 
     public function show($slug){
-        $product = Product::where('slug',$slug)->with('brand','type','category')->first();
+        $product = Product::where('slug',$slug)->with('brand','type','category','tags')->first();
         if($product){
             return response()->json([
                 'success' => true,
